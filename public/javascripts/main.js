@@ -1,12 +1,19 @@
+var xAxis,
+  yAxis,
+  zAxis;
 
 function handleOrientation(event) {
-  x = event.beta;  // In degree in the range [-180,180]
-  y = event.gamma; // In degree in the range [-90,90]
+  xAxis = Number.parseFloat(event.beta);  // [-180,180]
+  yAxis = Number.parseFloat(event.gamma); // [-90,90]
+  zAxis = Number.parseFloat(event.alpha); // [0,360]
 }
 
 window.addEventListener('deviceorientation', handleOrientation);
 window.addEventListener('load', function() {
   var form = document.getElementById("configForm");
+  var xAxisLabel = document.getElementById("xAxis");
+  var yAxisLabel = document.getElementById("yAxis");
+  var zAxisLabel = document.getElementById("zAxis");
 
   form.addEventListener("submit", function(event) {
     event.preventDefault();
@@ -23,11 +30,14 @@ window.addEventListener('load', function() {
     port.open();
 
     setInterval(function() {
-      console.log([x, y]);
-      port.send({
-        address: path,
-        args: [x, y]
-      });
+      var oscMsg = [xAxis, yAxis, zAxis];
+      console.log("oscMsg: " + oscMsg);
+
+      xAxisLabel.textContent = xAxis.toFixed(2);
+      yAxisLabel.textContent = yAxis.toFixed(2);
+      zAxisLabel.textContent = zAxis.toFixed(2);
+
+      port.send({ address: path, args: oscMsg });
     }, 1000);
 
     for (var i=0; i < inputs.length; i++) {
