@@ -13,7 +13,7 @@ const server = express()
 
 const wss = new SocketServer({ server });
 
-var store = [];
+var store = { objs: [] }
 
 wss.on('connection', (ws) => {
   console.log('Client connected');
@@ -21,7 +21,7 @@ wss.on('connection', (ws) => {
 
   ws.on('message', (data) => {
     console.log("message received: " + data)
-    store.concat(data);
+    store.objs.push(data);
   });
 });
 
@@ -29,6 +29,6 @@ setInterval(() => {
   wss.clients.forEach((client) => {
     console.log("sending to clients: ", store);
     client.send(JSON.stringify(store));
-    store = [];
+    store.objs = [];
   });
 }, 250);
