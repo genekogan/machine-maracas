@@ -138,11 +138,10 @@
           }, 100);
 
           ws.onmessage = function (event) {
-            var store = JSON.parse(event.data);
+            var data = JSON.parse(event.data);
+            console.log(data);
 
-            if (store.foo) {
-              objsEl.textContent = store.foo;
-            };
+            // objsEl.textContent = JSON.stringify(store);
 
             // for (var i; i < store.objs.length; i++) {
             //   console.log(store.objs[i]);
