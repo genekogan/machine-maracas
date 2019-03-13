@@ -13,10 +13,22 @@ const server = express()
 
 const wss = new SocketServer({ server });
 
+var store = [];
+
 wss.on('connection', (ws) => {
   console.log('Client connected');
   ws.on('close', () => console.log('Client disconnected'));
 
-  ws.on('message', (data) => console.log(data));
+  ws.on('message', (data) => {
+    console.log("message received: " + data)
+    store.concat(data);
+  });
 });
 
+setInterval(() => {
+  wss.clients.forEach((client) => {
+    console.log("sending to clients: ", store);
+    client.send(JSON.stringify(store));
+    store = [];
+  });
+}, 250);
