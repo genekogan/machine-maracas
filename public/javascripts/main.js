@@ -24,7 +24,7 @@ window.addEventListener('load', function() {
       path = inputs['path'].value;
 
 
-    var ws = new WebSocket("ws://" + address + ":" + port);
+    var ws = new WebSocket("wss://" + address + ":" + port);
     // var port = new osc.WebSocketPort({
     //   url: "ws://" + address + ":" + port
     // });
