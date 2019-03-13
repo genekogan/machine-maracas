@@ -43,8 +43,10 @@ window.addEventListener('load', function() {
 
     }, 1000);
 
-    ws.onmessage = function(event){
-      console.log(event.data);
+    ws.onopen = function() {
+      ws.onmessage = function(event){
+        console.log(event.data);
+      };
     };
 
     for (var i=0; i < inputs.length; i++) {
