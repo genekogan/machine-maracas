@@ -53,14 +53,18 @@ var wss = new WebSocket.Server({
   port: WEB_SOCKET_PORT
 });
 
-wss.on("connection", function (socket) {
+wss.on("connection", function(ws) {
   console.log("A Web Socket connection has been established!");
-  var socketPort = new osc.WebSocketPort({
-    socket: socket
-  });
+  // var socketPort = new osc.WebSocketPort({
+  //   socket: socket
+  // });
 
-  var relay = new osc.Relay(udp, socketPort, {
-    raw: true
+  // var relay = new osc.Relay(udp, socketPort, {
+  //   raw: true
+  // });
+  
+  ws.on('message', function incoming(data) {
+    ws.send(data);
   });
 });
 

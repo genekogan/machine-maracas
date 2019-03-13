@@ -23,11 +23,13 @@ window.addEventListener('load', function() {
       port = inputs['port'].value,
       path = inputs['path'].value;
 
-    var port = new osc.WebSocketPort({
-      url: "ws://" + address + ":" + port
-    });
 
-    port.open();
+    var ws = new WebSocket("ws://" + address + ":" + port);
+    // var port = new osc.WebSocketPort({
+    //   url: "ws://" + address + ":" + port
+    // });
+
+    // port.open();
 
     setInterval(function() {
       var oscMsg = [xAxis, yAxis, zAxis];
@@ -37,8 +39,13 @@ window.addEventListener('load', function() {
       yAxisLabel.textContent = yAxis.toFixed(2);
       zAxisLabel.textContent = zAxis.toFixed(2);
 
-      port.send({ address: path, args: oscMsg });
+      ws.send({ address: path, args: oscMsg });
+
     }, 1000);
+
+    ws.onmessage = function(event){
+      console.log(event.data);
+    };
 
     for (var i=0; i < inputs.length; i++) {
       inputs[i].setAttribute('disabled', '');
