@@ -31,4 +31,4 @@ setInterval(() => {
     client.send(JSON.stringify(store));
     store.objs = [];
   });
-}, 250);
+}, 1000);
