@@ -2,7 +2,7 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+var logger = require('heroku-logger');
 
 var app = express();
 const UDP_PORT = 7500;
@@ -54,7 +54,7 @@ var wss = new WebSocket.Server({
 });
 
 wss.on("connection", function(ws) {
-  console.log("A Web Socket connection has been established!");
+  logger.info("A Web Socket connection has been established!");
   
   ws.on('message', function incoming(data) {
     wss.clients.forEach(function each(client) {
@@ -73,7 +73,7 @@ wss.on("connection", function(ws) {
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(logger('dev'));
+// app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
