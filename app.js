@@ -55,16 +55,13 @@ var wss = new WebSocket.Server({
 
 wss.on("connection", function(ws) {
   console.log("A Web Socket connection has been established!");
-  // var socketPort = new osc.WebSocketPort({
-  //   socket: socket
-  // });
-
-  // var relay = new osc.Relay(udp, socketPort, {
-  //   raw: true
-  // });
   
   ws.on('message', function incoming(data) {
-    ws.send(data);
+    wss.clients.forEach(function each(client) {
+      if (client !== ws && client.readyState === WebSocket.OPEN) {
+        client.send(data);
+      }
+    });
   });
 
   ws.on('close', () => console.log('Client disconnected'));
