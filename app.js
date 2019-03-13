@@ -66,6 +66,8 @@ wss.on("connection", function(ws) {
   ws.on('message', function incoming(data) {
     ws.send(data);
   });
+
+  ws.on('close', () => console.log('Client disconnected'));
 });
 
 // based off of standard express generator web server setup
