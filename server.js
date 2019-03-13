@@ -28,13 +28,15 @@ wss.on('connection', (ws) => {
 setInterval(() => {
   wss.clients.forEach((client) => {
     var sample = store.objs[0];
-    console.log("sending to clients: " + JSON.stringify({ 'foo': sample }));
+    // console.log("sending to clients: " + JSON.stringify({ 'foo': sample }));
+    console.log("hello world");
 
     // console.log("sending to clients: ", store);
     // client.send(JSON.stringify(store));
 
     if (sample) {
-      client.send(JSON.stringify({ 'foo': sample }));
+      // client.send(JSON.stringify({ 'foo': sample }));
+      client.send("hello world");
     }
 
     store.objs = [];
