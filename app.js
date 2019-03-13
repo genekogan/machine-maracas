@@ -55,6 +55,7 @@ var wss = new WebSocket.Server({
 
 wss.on("connection", function(ws) {
   logger.info("A Web Socket connection has been established!");
+  console.log("A Web Socket connection has been established!");
   
   ws.on('message', function incoming(data) {
     wss.clients.forEach(function each(client) {
