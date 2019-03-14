@@ -15,14 +15,16 @@ const server = express()
 
 const wss = new SocketServer({ server });
 
-var store = { users: {} }
+var store = { users: {} };
 
 wss.on('connection', (ws) => {
   ws.id = uuid.v4();
   console.log('Client connected: ' + ws.id);
+  console.log('Total clients connected: ', wss.clients.length);
 
   ws.on('close', () => {
     console.log('Client disconnected: ' + ws.id);
+    console.log('Total clients connected: ', wss.clients.length);
   });
 
   ws.on('message', (wsMsg) => {

@@ -1,6 +1,7 @@
 var xAxis,
   yAxis,
   zAxis;
+var HOST = location.origin.replace(/^http/, 'ws')
 
 function handleOrientation(event) {
   xAxis = Number.parseFloat(event.beta);  // [-180,180]
@@ -14,13 +15,13 @@ window.addEventListener('load', function() {
   var xAxisLabel = document.getElementById("xAxis");
   var yAxisLabel = document.getElementById("yAxis");
   var zAxisLabel = document.getElementById("zAxis");
-  var HOST = location.origin.replace(/^http/, 'ws')
-  var ws = new WebSocket(HOST);
 
   form.addEventListener("submit", function(event) {
     event.preventDefault();
+    var ws = new WebSocket(HOST);
     var inputs = form.elements;
     var username = inputs['name'].value;
+    var displayData = true;
 
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].setAttribute('disabled', '');
@@ -36,16 +37,23 @@ window.addEventListener('load', function() {
         }
       };
 
-      xAxisLabel.textContent = xAxis.toFixed(2);
-      yAxisLabel.textContent = yAxis.toFixed(2);
-      zAxisLabel.textContent = zAxis.toFixed(2);
+      if (displayData) {
+        xAxisLabel.textContent = xAxis.toFixed(2);
+        yAxisLabel.textContent = yAxis.toFixed(2);
+        zAxisLabel.textContent = zAxis.toFixed(2);
+      }
 
       ws.send(JSON.stringify(wsMsg));
     }, 100);
 
-    ws.onmessage = function (event) {
+    ws.onmessage = function(event) {
       var data = JSON.parse(event.data);
       console.log(data);
-    }
+    };
+
+    ws.onclose = function(event) {
+      displayData = false;
+      alert('Disconnected from server, please refresh and resubmit');
+    };
   });
 });
