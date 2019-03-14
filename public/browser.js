@@ -22,7 +22,7 @@ window.addEventListener('load', function() {
     var inputs = form.elements;
     var username = inputs['name'].value;
 
-    for (var i; i < inputs.length; i++) {
+    for (var i = 0; i < inputs.length; i++) {
       inputs[i].setAttribute('disabled', '');
     };
 
