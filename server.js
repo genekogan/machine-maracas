@@ -26,8 +26,14 @@ wss.on('connection', (ws) => {
   });
 
   ws.on('message', (wsMsg) => {
-    var msgJSON = JSON.parse(wsMsg);
-    store.users.push({ 'id': msgJSON.id, deviceData: msgJSON.deviceData });
+    try {
+      var msgJSON = JSON.parse(wsMsg);
+      store.users.push({ 'id': msgJSON.id, deviceData: msgJSON.deviceData });
+    } catch(e) {
+      console.log("Unexpected message: ");
+      console.log(e)
+      console.log(e.stack)
+    }
   });
 });
 
