@@ -8,6 +8,8 @@ A simple Node.js Express application that allows users to send their browser's [
 
 *The original version of this repository that forwarded the WebSocket data as OSC messages can be found on the [`osc-server` branch](https://github.com/adrianbautista/machine-maracas/tree/osc-server).*
 
+![screenshot](screenshot.jpeg)
+
 # Getting Started
 
 1. Clone the repo
