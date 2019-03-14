@@ -28,127 +28,62 @@
         <form id="configForm">
           <div class="columns">
             <div class="column">
-              <div class="field">
-                <label class="label">WebSocket Address</label>
+              <label class="label">Username</label>
+              <div class="field has-addons">
                 <div class="control">
-                  <!-- <input class="input" name="address" type="text" value="<%= address %>"> -->
+                  <input class="input" name="name" type="text" placeholder="serge" required>
                 </div>
-              </div>
-            </div>
-
-            <div class="column">
-              <div class="field">
-                <label class="label">WebSocket Port</label>
-                <div class="control">
-                  <!-- <input class="input" name="port" type="text" value="<%= port %>"> -->
-                </div>
-              </div>
-            </div>
-
-            <div class="column">
-              <div class="field">
-                <label class="label">OSC Path</label>
-                <div class="control">
-                  <!-- <input class="input" name="path" type="text" value="/inputs"> -->
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="columns">
-            <div class="column">
-              <div class="field">
                 <div class="control">
                   <input type="submit" class="button is-primary" value="Connect">
                 </div>
               </div>
             </div>
-          </div>
-      </div>
-    </section>
-
-    <section>
-
-          <div class="columns">
             <div class="column">
-              <div class="level">
-                <div class="level-item has-text-centered">
-                  <div>
-                    <p class="heading">X Axis</p>
-                    <p class="title" id="xAxis">--</p>
-                  </div>
-                </div>
-                <div class="level-item has-text-centered">
-                  <div>
-                    <p class="heading">Y Axis</p>
-                    <p class="title" id="yAxis">--</p>
-                  </div>
-                </div>
-                <div class="level-item has-text-centered">
-                  <div>
-                    <p class="heading">Z Axis</p>
-                    <p class="title" id="zAxis">--</p>
-                  </div>
-                </div>
-                <div class="level-item has-text-centered">
-                  <div>
-                    <p class="heading">Objs</p>
-                    <p id="objs">--</p>
-                  </div>
+              <div class="field">
+                <div class="control">
                 </div>
               </div>
             </div>
           </div>
         </form>
+      </div>
     </section>
 
-    <script>
-      var xAxis,
-        yAxis,
-        zAxis;
+    <section>
+      <div class="container">
+        <div class="columns">
+          <div class="column">
+            <div class="level">
+              <div class="level-item has-text-centered">
+                <div>
+                  <p class="heading">X Axis</p>
+                  <p class="title" id="xAxis">--</p>
+                </div>
+              </div>
+              <div class="level-item has-text-centered">
+                <div>
+                  <p class="heading">Y Axis</p>
+                  <p class="title" id="yAxis">--</p>
+                </div>
+              </div>
+              <div class="level-item has-text-centered">
+                <div>
+                  <p class="heading">Z Axis</p>
+                  <p class="title" id="zAxis">--</p>
+                </div>
+              </div>
+              <div class="level-item has-text-centered">
+                <div>
+                  <p class="heading">Objs</p>
+                  <p id="objs">--</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-      function handleOrientation(event) {
-        xAxis = Number.parseFloat(event.beta);  // [-180,180]
-        yAxis = Number.parseFloat(event.gamma); // [-90,90]
-        zAxis = Number.parseFloat(event.alpha); // [0,360]
-      }
-      window.addEventListener('deviceorientation', handleOrientation);
-
-      window.addEventListener('load', function() {
-        var form = document.getElementById("configForm");
-        var xAxisLabel = document.getElementById("xAxis");
-        var yAxisLabel = document.getElementById("yAxis");
-        var zAxisLabel = document.getElementById("zAxis");
-        var objsEl = document.getElementById("objs");
-        var HOST = location.origin.replace(/^http/, 'ws')
-        var ws = new WebSocket(HOST);
-
-        form.addEventListener("submit", function(event) {
-          event.preventDefault();
-
-          setInterval(function() {
-            var oscMsg = {'xAxis': xAxis, 'yAxis': yAxis, 'zAxis': zAxis};
-            // console.log("oscMsg: " + oscMsg);
-
-            xAxisLabel.textContent = xAxis.toFixed(2);
-            yAxisLabel.textContent = yAxis.toFixed(2);
-            zAxisLabel.textContent = zAxis.toFixed(2);
-
-            ws.send(JSON.stringify(oscMsg));
-          }, 100);
-
-          ws.onmessage = function (event) {
-            var data = JSON.parse(event.data);
-            console.log(data);
-
-            // objsEl.textContent = JSON.stringify(store);
-
-            // for (var i; i < store.objs.length; i++) {
-            //   console.log(store.objs[i]);
-            // };
-          }
-        });
-      });
-    </script>
+    <script src="/browser.js"></script>
   </body>
 </html>

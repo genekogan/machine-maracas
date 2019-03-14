@@ -9,6 +9,7 @@ const PORT = process.env.PORT || 3000;
 const INDEX = path.join(__dirname, 'index.html');
 
 const server = express()
+  .use(express.static(path.join(__dirname, 'public')))
   .use((req, res) => res.sendFile(INDEX) )
   .listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
@@ -22,8 +23,9 @@ wss.on('connection', (ws) => {
 
   ws.on('close', () => console.log('Client disconnected'));
 
-  ws.on('message', (data) => {
-    store.users.push({ 'id': ws.id, deviceData: data });
+  ws.on('message', (wsMsg) => {
+    var msgJSON = JSON.parse(wsMsg);
+    store.users.push({ 'id': msgJSON.id, deviceData: msgJSON.deviceData });
   });
 });
 
@@ -32,7 +34,7 @@ setInterval(() => {
     var sample = store.users[0];
     // console.log("sending to clients: " + JSON.stringify({ 'foo': sample }));
     // console.log("clients connected", wss.clients.map( c => c.id));
-    console.log("store: ", store);
+    // console.log("store: ", store);
 
     // console.log("sending to clients: ", store);
     // client.send(JSON.stringify(store));
