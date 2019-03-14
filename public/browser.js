@@ -1,7 +1,6 @@
-var xAxis,
-  yAxis,
-  zAxis;
+var xAxis, yAxis, zAxis;
 var HOST = location.origin.replace(/^http/, 'ws')
+var DEVICE_INTERVAL = 100;
 
 function handleOrientation(event) {
   xAxis = Number.parseFloat(event.beta);  // [-180,180]
@@ -44,7 +43,7 @@ window.addEventListener('load', function() {
       }
 
       ws.send(JSON.stringify(wsMsg));
-    }, 100);
+    }, DEVICE_INTERVAL);
 
     ws.onmessage = function(event) {
       var data = JSON.parse(event.data);

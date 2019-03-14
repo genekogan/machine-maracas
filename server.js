@@ -6,6 +6,7 @@ const path = require('path');
 const uuid = require('uuid');
 
 const PORT = process.env.PORT || 3000;
+const USERS_INTERVAL = process.env.USERS_INTERVAL || 200;
 const INDEX = path.join(__dirname, 'index.html');
 
 const server = express()
@@ -47,4 +48,4 @@ setInterval(() => {
   }
 
   store.users = {};
-}, 200);
+}, USERS_INTERVAL);
