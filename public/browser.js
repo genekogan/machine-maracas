@@ -5,7 +5,7 @@ var xAxis,
 function handleOrientation(event) {
   xAxis = Number.parseFloat(event.beta);  // [-180,180]
   yAxis = Number.parseFloat(event.gamma); // [-90,90]
-  zAxis = Number.parseFloat(event.alpha); // [0,360]
+  zAxis = Number.parseFloat(event.alpha) || 0; // [0,360]
 }
 window.addEventListener('deviceorientation', handleOrientation);
 
