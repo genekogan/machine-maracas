@@ -18,10 +18,12 @@ const wss = new SocketServer({ server });
 var store = { users: [] }
 
 wss.on('connection', (ws) => {
-  console.log('Client connected');
   ws.id = uuid.v4();
+  console.log('Client connected: ' + ws.id);
 
-  ws.on('close', () => console.log('Client disconnected'));
+  ws.on('close', () => {
+    console.log('Client disconnected: ' + ws.id);
+  });
 
   ws.on('message', (wsMsg) => {
     var msgJSON = JSON.parse(wsMsg);
@@ -30,11 +32,11 @@ wss.on('connection', (ws) => {
 });
 
 setInterval(() => {
-  wss.clients.forEach((client) => {
-    if (store.users.length) {
+  if (store.users.length) {
+    wss.clients.forEach((client) => {
       client.send(JSON.stringify(store));
-    }
+    });
+  }
 
-    store.users = [];
-  });
+  store.users = [];
 }, 1000);
