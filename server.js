@@ -15,7 +15,7 @@ const server = express()
 
 const wss = new SocketServer({ server });
 
-var store = { users: [] }
+var store = { users: {} }
 
 wss.on('connection', (ws) => {
   ws.id = uuid.v4();
@@ -28,7 +28,7 @@ wss.on('connection', (ws) => {
   ws.on('message', (wsMsg) => {
     try {
       var msgJSON = JSON.parse(wsMsg);
-      store.users.push({ 'id': msgJSON.id, deviceData: msgJSON.deviceData });
+      store.users[msgJSON.id] = { deviceData: msgJSON.deviceData };
     } catch(e) {
       console.log("Unexpected message: ");
       console.log(e)
@@ -38,11 +38,11 @@ wss.on('connection', (ws) => {
 });
 
 setInterval(() => {
-  if (store.users.length) {
+  if (Object.keys(store.users).length) {
     wss.clients.forEach((client) => {
       client.send(JSON.stringify(store));
     });
   }
 
-  store.users = [];
+  store.users = {};
 }, 1000);

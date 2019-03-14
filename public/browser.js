@@ -30,9 +30,9 @@ window.addEventListener('load', function() {
       var wsMsg = {
         'id': username,
         'deviceData': {
-          'xAxis': xAxis,
-          'yAxis': yAxis,
-          'zAxis': zAxis
+          'x': xAxis,
+          'y': yAxis,
+          'z': zAxis
         }
       };
 
