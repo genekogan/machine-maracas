@@ -45,4 +45,4 @@ setInterval(() => {
   }
 
   store.users = {};
-}, 1000);
+}, 200);
