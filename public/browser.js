@@ -14,7 +14,6 @@ window.addEventListener('load', function() {
   var xAxisLabel = document.getElementById("xAxis");
   var yAxisLabel = document.getElementById("yAxis");
   var zAxisLabel = document.getElementById("zAxis");
-  var objsEl = document.getElementById("objs");
   var HOST = location.origin.replace(/^http/, 'ws')
   var ws = new WebSocket(HOST);
 

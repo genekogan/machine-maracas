@@ -31,17 +31,8 @@ wss.on('connection', (ws) => {
 
 setInterval(() => {
   wss.clients.forEach((client) => {
-    var sample = store.users[0];
-    // console.log("sending to clients: " + JSON.stringify({ 'foo': sample }));
-    // console.log("clients connected", wss.clients.map( c => c.id));
-    // console.log("store: ", store);
-
-    // console.log("sending to clients: ", store);
-    // client.send(JSON.stringify(store));
-
-    if (sample) {
-      // client.send(JSON.stringify({ 'foo': sample }));
-      client.send(JSON.stringify(sample));
+    if (store.users.length) {
+      client.send(JSON.stringify(store));
     }
 
     store.users = [];
