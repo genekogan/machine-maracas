@@ -31,7 +31,7 @@ wss.on('connection', (ws) => {
   ws.on('message', (wsMsg) => {
     try {
       var msgJSON = JSON.parse(wsMsg);
-      store.users[msgJSON.id] = { deviceData: msgJSON.deviceData };
+      store.users[msgJSON.id] = { deviceData: msgJSON.deviceData, name: msgJSON.id };
     } catch(e) {
       console.log("Unexpected message: ");
       console.log(e)
