@@ -35,6 +35,7 @@ window.addEventListener('load', function() {
           'z': zAxis
         }
       };
+      //ctx.elt.toDataURL();
 
       if (displayData) {
         xAxisLabel.textContent = xAxis.toFixed(2);
@@ -43,6 +44,7 @@ window.addEventListener('load', function() {
       }
 
       ws.send(JSON.stringify(wsMsg));
+    
     }, DEVICE_INTERVAL);
 
     ws.onmessage = function(event) {

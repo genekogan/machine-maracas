@@ -6,6 +6,43 @@ let noseX, noseY;
 let eyeLX, eyeLY, eyeRX, eyeRY;
 
 
+
+var HOST = location.origin.replace(/^http/, 'ws')
+var DEVICE_INTERVAL = 100;
+var ws;
+
+var setupWS() {
+  ws = new WebSocket(HOST);
+  ws.onmessage = function(event) {
+    var data = JSON.parse(event.data);
+    console.log(data);
+  };
+  ws.onclose = function(event) {
+    displayData = false;
+    alert('Disconnected from server, please refresh and resubmit');
+  };  
+}
+
+
+function sendWS() {
+
+  var wsMsg = {
+    'id': 'myUserID',
+    'imageData' : video.elt.toDataURL(),
+    'deviceData' : {'x':1.0, 'y':2.0, 'z':3.0}
+  };
+
+  ws.send(JSON.stringify(wsMsg));
+}
+
+function keyPressed() {
+  console.log("keypress");
+  if (key==' '){
+    console.log("go");
+    sendWS();
+  }
+}
+
 function setupTracking() {
   video = createCapture(VIDEO);
   video.size(width, height);
@@ -18,6 +55,7 @@ function setupTracking() {
 function setup() {
   createCanvas(640, 480);
   setupTracking();
+  setupWS();
 }
 
 
@@ -73,3 +111,4 @@ function draw() {
   image(img2, 50, 50);
   
 }
+
