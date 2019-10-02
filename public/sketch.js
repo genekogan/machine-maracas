@@ -29,7 +29,8 @@ function sendWS() {
 
   var wsMsg = {
     'id': 'myUserID',
-    'imageData' : ctx.elt.toDataURL(),
+    'testField': 'aksdjkadsj',
+    'imageData' : str(ctx.elt.toDataURL()),
     'deviceData' : {'x':1.0, 'y':2.0, 'z':3.0}
   };
 
