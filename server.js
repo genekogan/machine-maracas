@@ -33,7 +33,15 @@ wss.on('connection', (ws) => {
       var msgJSON = JSON.parse(wsMsg);
       store.users[msgJSON.id] = { deviceData: msgJSON.deviceData, name: msgJSON.id };
 
-      console.log("received ", msgJSON.imageData);
+      console.log("received " );
+
+      console.log("now send ");
+      wss.clients.forEach((client) => {
+        client.send(JSON.stringify({"myMessage": "hi from thee server", "other": 5}));
+        //client.send("hi from thee server");
+      });
+    
+
 
     } catch(e) {
       console.log("Unexpected message: ");
@@ -44,6 +52,7 @@ wss.on('connection', (ws) => {
 });
 
 setInterval(() => {
+  
   if (Object.keys(store.users).length) {
     wss.clients.forEach((client) => {
       client.send(JSON.stringify(store));

@@ -15,6 +15,7 @@ function setupWS() {
   ws = new WebSocket(HOST);
   ws.onmessage = function(event) {
     var data = JSON.parse(event.data);
+    console.log("got a message");
     console.log(data);
   };
   ws.onclose = function(event) {
@@ -28,7 +29,7 @@ function sendWS() {
 
   var wsMsg = {
     'id': 'myUserID',
-    'imageData' : video.elt.toDataURL(),
+    'imageData' : ctx.elt.toDataURL(),
     'deviceData' : {'x':1.0, 'y':2.0, 'z':3.0}
   };
 
@@ -52,8 +53,9 @@ function setupTracking() {
   //registerMethod('pre', updateTracking);
 }
 
+var ctx;
 function setup() {
-  createCanvas(640, 480);
+  ctx = createCanvas(640, 480);
   setupTracking();
   setupWS();
 }
@@ -111,7 +113,7 @@ function draw() {
   image(img2, 50, 50);
 
   if (frameCount % 200==0) {
-    sendWS();
+    //sendWS();
   }
   
 }
