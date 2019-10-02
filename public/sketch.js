@@ -11,7 +11,7 @@ var HOST = location.origin.replace(/^http/, 'ws')
 var DEVICE_INTERVAL = 100;
 var ws;
 
-var setupWS() {
+function setupWS() {
   ws = new WebSocket(HOST);
   ws.onmessage = function(event) {
     var data = JSON.parse(event.data);
