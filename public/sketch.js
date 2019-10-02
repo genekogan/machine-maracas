@@ -109,6 +109,10 @@ function draw() {
   img2.resize(300, 300);
   
   image(img2, 50, 50);
+
+  if (frameCount % 200==0) {
+    sendWS();
+  }
   
 }
 
